@@ -1,20 +1,19 @@
 FROM ubuntu:16.04
 MAINTAINER Josh.5 "jsunnex@gmail.com"
 
-# Create default user
-RUN useradd --create-home --home-dir /home/docker docker
-RUN chown -R docker:docker /home/docker
-ENV HOME /home/docker
-WORKDIR $HOME
-
+################
+### CONFIG:
+###
 # set version for s6 overlay
 ARG OVERLAY_VERSION="v1.21.2.2"
 ARG OVERLAY_ARCH="amd64"
+
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
     HOME="/root" \
     TERM="xterm"
+WORKDIR $HOME
 
 RUN \
     echo "**** install build packages ****" && \
@@ -41,6 +40,9 @@ RUN \
             /tmp/s6-overlay.tar.gz -C / \
         && \
     echo "**** create docker user and make our folders ****" && \
+        groupmod -g 1000 users && \
+        useradd -u 1000 -U -d /config -s /bin/false docker && \
+        usermod -G users docker && \
         mkdir -p \
             /app \
             /config \
@@ -50,7 +52,10 @@ RUN \
         sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
         && \
         echo "root:root" | chpasswd \
+        && \
     echo "**** cleanup ****" && \
+        rm -rf /tmp/* \
+        && \
         rm -rf /var/lib/apt/lists/*
 
 # add local files
