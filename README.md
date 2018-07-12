@@ -35,9 +35,9 @@ Additional params to your container:
 
 ## NOTES:
 It is strongly recommended that you change the default root password for ssh login if you intened to use it in production.
-Change the password with 'echo 
+Change the password with
 ```bash
-"root:something_else" | chpasswd'
+echo "root:something_else" | chpasswd
 ```
 or to disable root access in ssh login all together:
 ```bash
