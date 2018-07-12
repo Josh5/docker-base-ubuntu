@@ -5,7 +5,7 @@
 
 ![ubuntu](https://logos-download.com/wp-content/uploads/2016/02/Ubuntu_logo.png)
 
-## Setup:
+## Features:
 |  |  |
 | --- | --- |
 | Base:  | Ubuntu  |
@@ -25,8 +25,21 @@ Configuration is stored in /config/
 User's app binaries can be installed to /app
 * Default user "docker"
 * Hosts file configurable in /config/hosts
+* SSH access to root with password 'root'
 
 Additional params to your container:
 * `-e PGID` for setting the GroupID of the default user
 * `-e PUID` for setting the UserID of the default user
 * `-e TZ` for setting timezone information, eg Europe/London
+
+
+## NOTES:
+It is strongly recommended that you change the default root password for ssh login if you intened to use it in production.
+Change the password with 'echo 
+```bash
+"root:something_else" | chpasswd'
+```
+or to disable root access in ssh login all together:
+```bash
+sed -i s/#PermitRootLogin.*/PermitRootLogin\ no/ /etc/ssh/sshd_config
+```
