@@ -49,9 +49,8 @@ RUN \
             /defaults \
     && \
     echo "**** cleanup ****" \
-        rm -rf /tmp/* \
-        && \
-        rm -rf /var/lib/apt/lists/*
+        && rm -rf /tmp/* \
+        && rm -rf /var/lib/apt/lists/*
 
 # add local files
 COPY root/ /
