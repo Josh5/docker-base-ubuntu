@@ -9,12 +9,6 @@ ARG OVERLAY_VERSION="v1.21.2.2"
 ARG OVERLAY_ARCH="amd64"
 
 
-# environment variables
-ENV PS1="$(whoami)@$(hostname):$(pwd)$ " \
-    HOME="/root" \
-    TERM="xterm"
-WORKDIR $HOME
-
 RUN \
     echo "**** install build packages ****" \
         && apt-get update \
